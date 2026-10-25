@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "inspo": {
+      "command": "npx",
+      "args": ["-y", "inspo-mcp"]
+    }
+  }
+}
