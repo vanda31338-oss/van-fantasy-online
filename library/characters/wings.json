@@ -1,0 +1,782 @@
+[
+ {
+  "id": "c1",
+  "name": "ต้น",
+  "role": "ไรเดอร์ส่งอาหาร ตัวหลัก (ก่อนมีปีก)",
+  "look": "ชุดไรเดอร์เขียว หมวกกันน็อกเขียว กางเกงเทาเข้ม",
+  "recipe": {
+   "body": "male",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_messy1",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_longsleeve",
+     "colors": {
+      "color_1": "green"
+     }
+    },
+    {
+     "id": "legs_pants",
+     "colors": {
+      "color_1": "charcoal"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "what": "หมวกกันน็อกไรเดอร์สีเขียว",
+     "z": 132,
+     "template": "helmet",
+     "colors": {
+      "a": "#3f7a2e",
+      "b": "#f2efe6",
+      "c": "#16141f",
+      "d": "#7cbf3f"
+     }
+    }
+   ]
+  }
+ },
+ {
+  "id": "c2",
+  "name": "ต้น (มีปีก)",
+  "role": "ต้นหลังได้ปีกสีทองเรืองแสง",
+  "look": "ปีกขนนกสีทอง มีแสงออร่ากับประกายรอบตัว",
+  "recipe": {
+   "body": "male",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "wings_feathered",
+     "v": "white",
+     "tint": "#ffc14a"
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_messy1",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_longsleeve",
+     "colors": {
+      "color_1": "green"
+     }
+    },
+    {
+     "id": "legs_pants",
+     "colors": {
+      "color_1": "charcoal"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "what": "หมวกกันน็อกไรเดอร์สีเขียว",
+     "z": 132,
+     "template": "helmet",
+     "colors": {
+      "a": "#3f7a2e",
+      "b": "#f2efe6",
+      "c": "#16141f",
+      "d": "#7cbf3f"
+     }
+    }
+   ]
+  },
+  "aura": {
+   "color": "#ffc14a",
+   "r": 30,
+   "y": 34,
+   "alpha": 0.5,
+   "sparks": 8,
+   "spark": "#fff6c2"
+  }
+ },
+ {
+  "id": "a1",
+  "name": "ทูตสวรรค์ปีกหกแฉก",
+  "role": "ผู้เสกให้ทุกคนมีปีก",
+  "look": "ผมยาวสีทอง ชุดยาวขาว รัศมีทองเหนือหัว ปีกขาวสามคู่ ตัวใหญ่เท่าตึก",
+  "recipe": {
+   "body": "female",
+   "skin": "light",
+   "pad": 24,
+   "layers": [
+    {
+     "id": "wings_feathered",
+     "v": "white",
+     "dy": -21
+    },
+    {
+     "id": "wings_feathered",
+     "v": "white",
+     "tint": "#fff6c2",
+     "dy": -6
+    },
+    {
+     "id": "wings_feathered",
+     "v": "gold",
+     "dy": 9
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_xlong_wavy",
+     "colors": {
+      "color_1": "platinum"
+     }
+    },
+    {
+     "id": "dress_sash",
+     "v": "white"
+    },
+    {
+     "id": "feet_sandals",
+     "colors": {
+      "color_1": "white"
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "what": "รัศมีทอง",
+     "z": 140,
+     "template": "halo",
+     "colors": {}
+    }
+   ]
+  },
+  "aura": {
+   "color": "#fff6c2",
+   "r": 44,
+   "y": 40,
+   "alpha": 0.55,
+   "sparks": 10,
+   "spark": "#ffe66b"
+  }
+ },
+ {
+  "id": "n1",
+  "name": "พนักงานออฟฟิศ",
+  "role": "สาวออฟฟิศที่เดินผ่านลานห้าง",
+  "look": "เสื้อเชิ้ตขาว กระโปรงกรมท่า ผมหางม้า",
+  "recipe": {
+   "body": "female",
+   "skin": "light",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_ponytail",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_blouse",
+     "v": "white"
+    },
+    {
+     "id": "legs_skirts_plain",
+     "colors": {
+      "color_1": "navy"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "m1",
+  "name": "พนักงานออฟฟิศ (มีปีก)",
+  "role": "สาวออฟฟิศที่เดินผ่านลานห้าง",
+  "look": "เสื้อเชิ้ตขาว กระโปรงกรมท่า ผมหางม้า · ปีกสีชมพู",
+  "recipe": {
+   "body": "female",
+   "skin": "light",
+   "layers": [
+    {
+     "id": "wings_feathered",
+     "v": "white",
+     "tint": "#ff4fa3"
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_ponytail",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_blouse",
+     "v": "white"
+    },
+    {
+     "id": "legs_skirts_plain",
+     "colors": {
+      "color_1": "navy"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "n2",
+  "name": "นักศึกษา",
+  "role": "นักศึกษาที่ลองบินคนแรก แล้วชนกลางอากาศ",
+  "look": "เสื้อขาว กางเกงดำ ผมเกรียน",
+  "recipe": {
+   "body": "male",
+   "skin": "olive",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_buzzcut",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "white"
+     }
+    },
+    {
+     "id": "legs_pants",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "m2",
+  "name": "นักศึกษา (มีปีก)",
+  "role": "นักศึกษาที่ลองบินคนแรก แล้วชนกลางอากาศ",
+  "look": "เสื้อขาว กางเกงดำ ผมเกรียน · ปีกสีฟ้านีออน",
+  "recipe": {
+   "body": "male",
+   "skin": "olive",
+   "layers": [
+    {
+     "id": "wings_feathered",
+     "v": "white",
+     "tint": "#4ff0ff"
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_buzzcut",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "white"
+     }
+    },
+    {
+     "id": "legs_pants",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "n3",
+  "name": "ลุงเสื้อฟ้า",
+  "role": "ลุงที่ปีกไปพันสายไฟ",
+  "look": "ผมบาง เสื้อฟ้า กางเกงขาสั้น รองเท้าแตะ",
+  "recipe": {
+   "body": "male",
+   "skin": "bronze",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_balding",
+     "colors": {
+      "color_1": "gray"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "sky"
+     }
+    },
+    {
+     "id": "legs_shorts",
+     "colors": {
+      "color_1": "brown"
+     }
+    },
+    {
+     "id": "feet_sandals",
+     "colors": {
+      "color_1": "brown"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "m3",
+  "name": "ลุงเสื้อฟ้า (มีปีก)",
+  "role": "ลุงที่ปีกไปพันสายไฟ",
+  "look": "ผมบาง เสื้อฟ้า กางเกงขาสั้น รองเท้าแตะ · ปีกสีม่วง (ปีกค้างคาว)",
+  "recipe": {
+   "body": "male",
+   "skin": "bronze",
+   "layers": [
+    {
+     "id": "wings_bat",
+     "v": "white",
+     "tint": "#9b5de5"
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_balding",
+     "colors": {
+      "color_1": "gray"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "sky"
+     }
+    },
+    {
+     "id": "legs_shorts",
+     "colors": {
+      "color_1": "brown"
+     }
+    },
+    {
+     "id": "feet_sandals",
+     "colors": {
+      "color_1": "brown"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "n4",
+  "name": "ป้าเสื้อแดง",
+  "role": "ป้าที่ตกใจร้องไห้",
+  "look": "ผมบ็อบ เสื้อแขนยาวแดง ผ้าถุงแดงเข้ม",
+  "recipe": {
+   "body": "female",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_bob",
+     "colors": {
+      "color_1": "dark_brown"
+     }
+    },
+    {
+     "id": "torso_clothes_longsleeve",
+     "colors": {
+      "color_1": "red"
+     }
+    },
+    {
+     "id": "legs_skirts_plain",
+     "colors": {
+      "color_1": "maroon"
+     }
+    },
+    {
+     "id": "feet_sandals",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "m4",
+  "name": "ป้าเสื้อแดง (มีปีก)",
+  "role": "ป้าที่ตกใจร้องไห้",
+  "look": "ผมบ็อบ เสื้อแขนยาวแดง ผ้าถุงแดงเข้ม · ปีกสีเขียวมะนาว",
+  "recipe": {
+   "body": "female",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "wings_feathered",
+     "v": "white",
+     "tint": "#7cbf3f"
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_bob",
+     "colors": {
+      "color_1": "dark_brown"
+     }
+    },
+    {
+     "id": "torso_clothes_longsleeve",
+     "colors": {
+      "color_1": "red"
+     }
+    },
+    {
+     "id": "legs_skirts_plain",
+     "colors": {
+      "color_1": "maroon"
+     }
+    },
+    {
+     "id": "feet_sandals",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "n5",
+  "name": "วัยรุ่นเสื้อเหลือง",
+  "role": "สาววัยรุ่นที่บินชนนักศึกษา",
+  "look": "ผมยาวดำ เสื้อเหลือง ขาสั้นยีนส์",
+  "recipe": {
+   "body": "female",
+   "skin": "olive",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_long",
+     "colors": {
+      "color_1": "raven"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "yellow"
+     }
+    },
+    {
+     "id": "legs_shorts",
+     "colors": {
+      "color_1": "blue"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "white"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "m5",
+  "name": "วัยรุ่นเสื้อเหลือง (มีปีก)",
+  "role": "สาววัยรุ่นที่บินชนนักศึกษา",
+  "look": "ผมยาวดำ เสื้อเหลือง ขาสั้นยีนส์ · ปีกสีส้ม (ปีกจันทรา)",
+  "recipe": {
+   "body": "female",
+   "skin": "olive",
+   "layers": [
+    {
+     "id": "wings_lunar",
+     "v": "white",
+     "tint": "#ff8a4c"
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_long",
+     "colors": {
+      "color_1": "raven"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "yellow"
+     }
+    },
+    {
+     "id": "legs_shorts",
+     "colors": {
+      "color_1": "blue"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "white"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "n6",
+  "name": "คนขับรถเก๋ง",
+  "role": "คนที่ทิ้งรถบินหนี",
+  "look": "เสื้อเชิ้ตขาว กางเกงกรมท่า",
+  "recipe": {
+   "body": "male",
+   "skin": "light",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_parted",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_longsleeve",
+     "colors": {
+      "color_1": "white"
+     }
+    },
+    {
+     "id": "legs_pants",
+     "colors": {
+      "color_1": "navy"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "m6",
+  "name": "คนขับรถเก๋ง (มีปีก)",
+  "role": "คนที่ทิ้งรถบินหนี",
+  "look": "เสื้อเชิ้ตขาว กางเกงกรมท่า · ปีกสีน้ำเงิน",
+  "recipe": {
+   "body": "male",
+   "skin": "light",
+   "layers": [
+    {
+     "id": "wings_feathered",
+     "v": "white",
+     "tint": "#3e8de0"
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_parted",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_longsleeve",
+     "colors": {
+      "color_1": "white"
+     }
+    },
+    {
+     "id": "legs_pants",
+     "colors": {
+      "color_1": "navy"
+     }
+    },
+    {
+     "id": "feet_shoes_basic",
+     "colors": {
+      "color_1": "black"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "m7",
+  "name": "ลูกค้าชั้น 30",
+  "role": "ลูกค้าที่สั่งข้าวมันไก่ แต่ก็มีปีกเหมือนกัน",
+  "look": "สาวชุดนอนชมพู ผมยาวลอน ปีกขาวมุก",
+  "recipe": {
+   "body": "female",
+   "skin": "light",
+   "layers": [
+    {
+     "id": "wings_lunar",
+     "v": "white",
+     "tint": "#e8edf7"
+    },
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_xlong_wavy",
+     "colors": {
+      "color_1": "chestnut"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "pink"
+     }
+    },
+    {
+     "id": "legs_pants",
+     "colors": {
+      "color_1": "rose"
+     }
+    },
+    {
+     "id": "feet_slippers",
+     "colors": {
+      "color_1": "white"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ }
+]

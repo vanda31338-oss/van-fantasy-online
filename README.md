@@ -1,62 +1,42 @@
-# Van Fantasy Online
+# Legend Studio — คลังงานภาพ (ใช้ซ้ำได้)
 
-An offline, single-player 2D action RPG for phones (landscape, touch controls), inspired by classic pixel MMORPGs.
-Built with **Phaser 3 + TypeScript + Vite**. All content (classes, skills, monsters, items, dungeons, VFX, balance) is data-driven.
+คลังงานภาพพิกเซลอาร์ตของช่อง **ตำนานติดบั๊ก** ที่ทำกับแอป Legend Shorts Studio
+เก็บไว้เพื่อหยิบไปใช้ในคลิปใหม่ และสร้างทุกอย่างใหม่ได้จากโค้ดในนี้
 
-**Play:** https://vanda31338-oss.github.io/van-fantasy-online/ (after GitHub Pages is enabled, see below)
+![ฉากทั้งหมด](library/previews_all.png)
 
-## Status — Milestone 1
+## มีอะไรบ้าง
 
-- Title screen, 3 character slots (create / delete with type-to-confirm), name validation
-- Main town **Vanheim** with NPCs (Elder Rowan, Merchant Mila, Blacksmith Borin, Runekeeper Selene, 3 Class Masters, Gatekeeper, Bulletin Board)
-- Floating joystick, attack button, 5-slot skill arc, potion quick slots, minimap, menu
-- Swordsman class with **Power Strike**
-- **Whispering Greenwood** (Lv 1–10): 4 waves + boss *Gobbleglob, the Moss King* (telegraphed slam zones, summons, enrage at 30%)
-- HP/MP, regen (faster in town), damage numbers, crits, knockback, hit flash, elements, simple aggro (threat table)
-- Level-up, stat points (Character panel), inventory, settings, death penalty + respawn in town, dungeon result screen
-- Auto-save (level up, leaving a dungeon, every 60 s, app pause/close) with save versioning + "Saving..." indicator
-- Procedural pixel-art placeholders for every sprite/tile/icon/VFX and chiptune placeholder audio
-- Debug panel: add `?debug=1` to the URL (Menu → Debug Panel, or the DBG button)
+| โฟลเดอร์ | คืออะไร |
+|---|---|
+| `library/scenes/` | ฉาก 27 ฉาก (สเปกฉาก JSON) — ชุดเดียวกับ "คลังฉาก" ในแอป |
+| `library/previews/` | ภาพตัวอย่างของแต่ละฉาก (270×480) |
+| `library/pixel/<โปรเจกต์>/` | ของ สัตว์ และของตกแต่งตัวละครแบบพิกเซล (`{pal, rows}` หรือ `{idle, action}` สำหรับสัตว์) |
+| `library/characters/<โปรเจกต์>.json` | สูตรตัวละคร LPC (ชั้นภาพ สี ปีก หมวก รัศมี) |
+| `projects/<โปรเจกต์>/` | บท จังหวะ การ์ดทั้งหมด (`*.src.js`) แผนที่พิกเซล บทพากย์ และเวลาคำ |
+| `studio/` | โค้ดแอปและเอนจิน (`src/`), เครื่องมือวาด (`tools/mk*.mjs`), เสียงประกอบ (`assets/sfx/`), ภาพ LPC (`dist/lpc/`) |
 
-## Project layout
+โปรเจกต์: `b100` = 100 บาท 7 วัน · `tiny` = ตัวหดเหลือ 2 เซน · `wings` = ทั้งเมืองมีปีก · `moonboat` = สปีดโบ๊ทวาร์ปไปดวงจันทร์
 
-```
-assets/                 Static, replaceable art & audio (see assets/README.md)
-  ui/ characters/ monsters/ vfx/ tiles/ icons/ audio/
-src/
-  main.ts               Game boot (Phaser config, fonts, auto-save hooks, portrait pause)
-  data/                 ALL tunable content — edit these to rebalance
-    balance.ts          Every formula & number (stats, EXP curve, monster scaling, elements)
-    classes.ts skills.ts monsters.ts items.ts dungeons.ts npcs.ts
-    assetManifest.ts    Central asset manifest (sprites, images, audio)
-    vfx.ts              VFX definitions
-  core/                 Game logic with no rendering (save, stats, combat math, state, audio, input state)
-  gfx/                  Asset loader, VFX player, procedural placeholder generators
-  entities/             Actor, Player, Monster, Npc
-  scenes/               Boot, Title, CharSelect, CharCreate, Town, Dungeon (both extend WorldScene), Hud
-  ui/                   Theme, widgets, panels, joystick, safe-area helpers
-.github/workflows/deploy.yml   Builds and deploys to GitHub Pages on every push to main
+## เอาไปใช้ซ้ำ
+
+- **ฉาก**: ในแอปขั้น 3 กด "+ ฉากจากคลัง" หรือคัดลอก `spec` จาก `library/scenes/*.json` ไปใส่การ์ดฉาก
+- **ของ/สัตว์**: ใส่ `map` (หรือ `frames`) จาก `library/pixel/` ลงการ์ดของ/สัตว์
+- **ตัวละคร**: ใส่ `recipe` จาก `library/characters/` ลงการ์ดตัวละคร
+- ฉากหลายฉากใช้ชิ้นส่วนที่เขียนไว้ในเอนจิน (`studio/src/engine/scene_*.js`) จึงต้องใช้เอนจินเวอร์ชันในนี้ขึ้นไป
+
+## สร้างใหม่
+
+```sh
+cd studio && python3 tools/build.py            # dist/index.html (แอป) + dist/engine.js
+node tools/mktiny.mjs ../projects/tiny/maps.json   # วาดของในคลิปตัวหดใหม่ (มี mkwings / mkboat / mkmaps ด้วย)
+python3 -m http.server 8766 & node qa/previews.mjs http://localhost:8766   # (รันที่รากรีโป) ทำภาพตัวอย่างฉากใหม่
 ```
 
-## Develop
+## เครดิตและสัญญาอนุญาต
 
-```
-npm install
-npm run dev       # local dev server
-npm run build     # type-check + production build into dist/
-```
-
-Desktop keys for testing: WASD/arrows move, J/Space attack, 1–5 skills, Q/E potions, F talk.
-
-## Deploy (GitHub Pages)
-
-1. Merge the pull request into `main`.
-2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions** (one-time).
-3. The *Deploy to GitHub Pages* workflow runs automatically; the game is then at the URL above.
-
-## Roadmap
-
-- **M2** Mage & Summoner, full skill trees + drag-and-drop skill slots, Auto Battle, Auto Potion, General Store
-- **M3** Leveling dungeons 2–8, quests, tutorial & feature-unlock guides, Lv 30 class change, all advanced classes
-- **M4** Equipment, refine, gems, runes, equipment dungeons, Boss Arena
-- **M5** Balance pass, VFX/UI polish, performance
+ภาพตัวละครมาจาก [Universal LPC Spritesheet Character Generator](https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator)
+ใช้ภายใต้ OGA-BY 3.0 / CC-BY-SA 3.0 / GPL 3.0 / GPL 2.0 / CC-BY 3.0 / CC0 — รายชื่อผู้วาดแต่ละชิ้นอยู่ใน `studio/dist/lpc/catalog.json` (`credits`)
+ต้องใส่เครดิตนี้ในคำอธิบายคลิปทุกครั้ง (แอปใส่ให้อัตโนมัติ)
+เสียงประกอบใน `studio/assets/sfx/` สร้างด้วย ElevenLabs
+ฉาก ของ และสัตว์ที่วาดเองในคลังนี้เป็นงานของช่อง

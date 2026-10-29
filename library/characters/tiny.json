@@ -1,0 +1,138 @@
+[
+ {
+  "id": "c1",
+  "name": "ต้น",
+  "role": "ตัวหดเหลือ 2 เซน ต้องรอดให้ครบ 24 ชั่วโมง",
+  "look": "เสื้อยืดฟ้า กางเกงขาสั้นเทา รองเท้าแตะฟ้า (ต้นคนเดิมจาก 100 บาท 7 วัน)",
+  "recipe": {
+   "body": "male",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_messy1",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "sky"
+     }
+    },
+    {
+     "id": "legs_shorts",
+     "colors": {
+      "color_1": "charcoal"
+     }
+    },
+    {
+     "id": "feet_slippers",
+     "colors": {
+      "color_1": "blue"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "c2",
+  "name": "แม่",
+  "role": "แม่ที่เข้ามากวาดห้อง",
+  "look": "ผมบ็อบดำ เสื้อม่วง ผ้าถุง รองเท้าแตะ",
+  "recipe": {
+   "body": "female",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_bob",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "lavender"
+     }
+    },
+    {
+     "id": "legs_skirt_straight",
+     "colors": {
+      "color_1": "purple"
+     }
+    },
+    {
+     "id": "feet_slippers",
+     "colors": {
+      "color_1": "brown"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "c7",
+  "name": "ต้น (ขนาดเดิม)",
+  "role": "ต้นตอนตัวกลับมาเท่าเดิมในถังขยะ",
+  "look": "ต้นคนเดิม มีเปลือกกล้วยบนหัว",
+  "recipe": {
+   "body": "male",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_messy1",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "sky"
+     }
+    },
+    {
+     "id": "legs_shorts",
+     "colors": {
+      "color_1": "charcoal"
+     }
+    },
+    {
+     "id": "feet_slippers",
+     "colors": {
+      "color_1": "blue"
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "what": "เปลือกกล้วยบนหัว",
+     "z": 140,
+     "dy": -3,
+     "note": "pixel overlay in library/pixel/tiny"
+    }
+   ]
+  }
+ }
+]

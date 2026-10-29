@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"><title>harness</title></head><body style="background:#222;color:#eee;font:12px monospace">
+<div id="log"></div>
+<script src="../dist/lib/mp4-muxer.js"></script>
+<script src="../dist/engine.js"></script>
+<script>
+const log=(m)=>{document.getElementById('log').textContent+=m+'\n'; console.log(m);};
+window.QA = {};
+QA.init = async function(){
+  LSE.LPC.base='../dist/lpc/'; LSE.Audio.SFX_URL='../dist/sfx/library.json';
+  await LSE.loadFonts();
+  const PJ=new URLSearchParams(location.search).get('p'); if(PJ){ await new Promise((ok,ko)=>{const sc=document.createElement('script'); sc.src=PJ+'/'+PJ+'.js?'+Date.now(); sc.onload=ok; sc.onerror=ko; document.head.appendChild(sc);}); }
+  const S=PJ?LSE[PJ.toUpperCase()]:LSE.SAMPLE; const VP=PJ?(PJ+'/voice.json'):'voice/voice.json';
+  const t0=performance.now();
+  let voice=null; try{ const j=await (await fetch(VP)).json(); const b=atob(j.pcm16); const u=new Uint8Array(b.length); for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i); const i16=new Int16Array(u.buffer); const f=new Float32Array(i16.length); for(let i=0;i<f.length;i++)f[i]=i16[i]/32768; voice={pcm:f,sr:j.sr,dur:j.dur,sentences:j.sentences}; }catch(e){log('no voice '+e)}
+  const rt=await LSE.buildRuntime({voice, cast:S.cast, scenes:S.scenes, beats:S.beats, palette:S.palette, title:S.title, watermark:{on:true,text:'ตำนานติดบั๊ก',opacity:0.22,pos:'top'}});
+  window.RT=rt; log('runtime ms '+Math.round(performance.now()-t0)+' L='+rt.timeline.L.toFixed(2)+' bpm='+rt.timeline.bpm+' bars='+rt.timeline.bars);
+  log('issues '+JSON.stringify(rt.timeline.issues));
+  log('maxHookGap '+rt.timeline.maxHookGap.toFixed(2)+' meter '+JSON.stringify(rt.stems.meter));
+  return {L:rt.timeline.L, issues:rt.timeline.issues, gap:rt.timeline.maxHookGap, meter:rt.stems.meter, ms:performance.now()-t0};
+};
+QA.contact = function(step, cols){
+  const L=RT.timeline.L; const n=Math.floor(L/step)+1; cols=cols||6; const w=180,h=320; const rows=Math.ceil(n/cols);
+  const {c,ctx}=LSE.canvas(cols*w, rows*(h+16)); ctx.fillStyle='#000'; ctx.fillRect(0,0,c.width,c.height);
+  for(let i=0;i<n;i++){ const t=Math.min(i*step, L-1/30); const f=RT.renderer.frame(t); ctx.imageSmoothingEnabled=true; ctx.drawImage(f,(i%cols)*w,Math.floor(i/cols)*(h+16),w,h); ctx.fillStyle='#ff0'; ctx.font='12px monospace'; ctx.fillText(t.toFixed(1)+'s',(i%cols)*w+4,Math.floor(i/cols)*(h+16)+h+12);}
+  return c.toDataURL('image/png');
+};
+QA.scene = function(id, t, k){ t=t||1; k=k||3; const b=RT.renderer.p.scenes[id]; const {c,ctx}=LSE.canvas(270,480); const S=LSE.Scene; const L=RT.timeline.L, bpm=RT.timeline.bpm;
+  S.drawLayer(ctx,b,'sky',0); S.drawAmbient(ctx,b,t,L,bpm,'sky',0); S.drawLayer(ctx,b,'far',0); S.drawLayer(ctx,b,'mid',0); S.drawAmbient(ctx,b,t,L,bpm,'back',0); S.drawLayer(ctx,b,'ground',0); S.drawLayer(ctx,b,'near',0); S.drawAmbient(ctx,b,t,L,bpm,'front',0);
+  S.drawLight(ctx,b,t,bpm,0); S.drawGlow(ctx,b,t,bpm,0); S.drawAmbient(ctx,b,t,L,bpm,'glow',0);
+  const o=LSE.canvas(270*k,480*k); o.ctx.imageSmoothingEnabled=false; o.ctx.drawImage(c,0,0,270*k,480*k); return o.c.toDataURL('image/png'); };
+QA.frame = function(t){ return RT.renderer.frame(t).toDataURL('image/png'); };
+QA.strip = async function(id, anims){
+  const comp=RT.cast[id].comp; anims=anims||['idle','walk','slash','spellcast','thrust','hurt'];
+  const rows=[]; let W=0;
+  for(const a of anims){ const an=comp.anims[a]; if(!an) continue; rows.push(an); W=Math.max(W,an.canvas.width);}
+  const H=rows.reduce((s,an)=>s+an.canvas.height,0);
+  const {c,ctx}=LSE.canvas(W,H); ctx.fillStyle='#3d3a5c'; ctx.fillRect(0,0,W,H); let y=0; for(const an of rows){ctx.drawImage(an.canvas,0,y); y+=an.canvas.height;}
+  return c.toDataURL('image/png');
+};
+QA.seam = function(){ return RT.renderer.seamTest(); };
+QA.exportTest = async function(){ const sup=await LSE.exportSupport(); return sup; };
+</script></body></html>

@@ -1,0 +1,131 @@
+[
+ {
+  "id": "c1",
+  "name": "ต้น",
+  "role": "ชายหนุ่มที่ต้องอยู่ให้รอดเจ็ดวันด้วยเงินร้อยบาท",
+  "look": "เสื้อยืดสีฟ้าซีด กางเกงขาสั้น รองเท้าแตะ ผมยุ่ง",
+  "recipe": {
+   "body": "male",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_messy1",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "sky"
+     }
+    },
+    {
+     "id": "legs_shorts",
+     "colors": {
+      "color_1": "charcoal"
+     }
+    },
+    {
+     "id": "feet_slippers",
+     "colors": {
+      "color_1": "blue"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "c2",
+  "name": "เจ๊ร้านของเก่า",
+  "role": "เจ้าของร้านรับซื้อของเก่าในซอย",
+  "look": "เสื้อแขนสั้นสีชมพู ผ้าถุง ผมบ็อบ",
+  "recipe": {
+   "body": "female",
+   "skin": "taupe",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female"
+    },
+    {
+     "id": "hair_bob",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "pink"
+     }
+    },
+    {
+     "id": "legs_skirt_straight",
+     "colors": {
+      "color_1": "maroon"
+     }
+    },
+    {
+     "id": "feet_slippers",
+     "colors": {
+      "color_1": "brown"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ },
+ {
+  "id": "c3",
+  "name": "ป้าอาสาโรงทาน",
+  "role": "ป้าที่ตักข้าวแจกที่โรงทานของวัด",
+  "look": "เสื้อขาว ผ้าถุงเขียว ผมสีเทา ใจดี",
+  "recipe": {
+   "body": "female",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_female_elderly"
+    },
+    {
+     "id": "hair_bob",
+     "colors": {
+      "color_1": "gray"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "white"
+     }
+    },
+    {
+     "id": "legs_skirt_straight",
+     "colors": {
+      "color_1": "teal"
+     }
+    },
+    {
+     "id": "feet_slippers",
+     "colors": {
+      "color_1": "tan"
+     }
+    }
+   ],
+   "overlays": []
+  }
+ }
+]

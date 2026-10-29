@@ -1,0 +1,52 @@
+[
+ {
+  "id": "c1",
+  "name": "คุณ",
+  "role": "คนขับสปีดโบ๊ทที่โดนวาร์ปไปดวงจันทร์",
+  "look": "เสื้อแขนสั้นสีส้มเหมือนเสื้อชูชีพ กางเกงขาสั้นน้ำเงิน รองเท้าแตะ แว่นกันแดด",
+  "recipe": {
+   "body": "male",
+   "skin": "amber",
+   "layers": [
+    {
+     "id": "body"
+    },
+    {
+     "id": "heads_human_male"
+    },
+    {
+     "id": "hair_messy1",
+     "colors": {
+      "color_1": "black"
+     }
+    },
+    {
+     "id": "torso_clothes_shortsleeve",
+     "colors": {
+      "color_1": "orange"
+     }
+    },
+    {
+     "id": "legs_shorts",
+     "colors": {
+      "color_1": "blue"
+     }
+    },
+    {
+     "id": "feet_sandals",
+     "colors": {
+      "color_1": "brown"
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "what": "แว่นกันแดด",
+     "z": 140,
+     "dy": 9,
+     "note": "pixel overlay in library/pixel/moonboat"
+    }
+   ]
+  }
+ }
+]
