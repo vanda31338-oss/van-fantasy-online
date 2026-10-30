@@ -97,7 +97,9 @@
       }
     }
     play() {
-      if (this.playing || !this.rt) return; this.ensureAudio(); this.ac.resume && this.ac.resume();
+      if (this.playing || !this.rt) return;
+      try { if (G.navigator && navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* iOS: play even with the silent switch on */ }
+      this.ensureAudio(); this.ac.resume && this.ac.resume();
       const L = this.rt.timeline.L; const when = this.ac.currentTime + 0.05; this.srcs = [];
       for (const k of ['music', 'sfx', 'voice']) { const b = this.bufs[k]; if (!b) continue; const s = this.ac.createBufferSource(); s.buffer = b; s.loop = !this.once; s.loopStart = 0; s.loopEnd = b.duration; s.connect(this.gains[k]); s.start(when, this.t % L); this.srcs.push(s); }
       this.t0 = when - this.t; this.playing = true; this.loop();
@@ -129,12 +131,62 @@
     return out;
   };
 
+  // MediaRecorder fallback (real time): a browser that cannot encode AAC with WebCodecs (Safari, Android, Linux Chrome) would
+  // otherwise write a silent file or Opus-in-MP4 that iPhones and most players cannot play
+  LSE.recordSupport = function () {
+    if (typeof G.MediaRecorder === 'undefined' || typeof G.HTMLCanvasElement === 'undefined' || !HTMLCanvasElement.prototype.captureStream) return null;
+    for (const t of ['video/mp4;codecs=avc1.640028,mp4a.40.2', 'video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a.40.2', 'video/mp4;codecs="avc1,mp4a"', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'])
+      try { if (MediaRecorder.isTypeSupported(t)) return t; } catch (e) { /* next */ }
+    return null;
+  };
+  LSE.exportPlan = async function () {
+    const sup = await LSE.exportSupport(); const rec = LSE.recordSupport(); const recAac = !!rec && /mp4a/.test(rec); // bare video/mp4 is Opus audio in Chrome
+    if (sup.video && sup.audio === 'aac') return { mode: 'encode', sup };
+    if (rec && (recAac || !sup.video || !sup.audio)) return { mode: 'record', mime: rec, sup };
+    if (sup.video) return { mode: 'encode', sup, warn: sup.audio ? 'opus' : 'noaudio' };
+    return { mode: null, sup };
+  };
+  LSE.recordSequence = async function (n, getRt, onProgress, signal, mime) {
+    const W = 1080, H = 1920; const big = document.createElement('canvas'); big.width = W; big.height = H; const g = big.getContext('2d'); g.imageSmoothingEnabled = false;
+    const AC = G.AudioContext || G.webkitAudioContext; let ac; try { ac = new AC({ sampleRate: 48000 }); } catch (e) { ac = new AC(); } await ac.resume();
+    const dest = ac.createMediaStreamDestination(); const vs = big.captureStream(30);
+    const stream = new MediaStream([...vs.getVideoTracks(), ...dest.stream.getAudioTracks()]);
+    const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 8e6, audioBitsPerSecond: 160000 }); const chunks = [];
+    rec.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+    const stopped = new Promise((r) => { rec.onstop = r; });
+    let total = 0;
+    try {
+      for (let k = 0; k < n; k++) {
+        const tag = n > 1 ? `ตอน ${k + 1}/${n} · ` : '';
+        onProgress && onProgress(k / n, tag + 'เตรียมภาพและเสียง');
+        const rt = await getRt(k); const L = rt.timeline.L; const mix = A.mix(rt.stems, {});
+        const buf = ac.createBuffer(2, mix[0].length, A.SR); buf.copyToChannel(mix[0], 0); buf.copyToChannel(mix[1], 1);
+        g.drawImage(rt.renderer.frame(0), 0, 0, W, H);
+        if (k === 0) rec.start(1000); else if (rec.state === 'paused') rec.resume();
+        const src = ac.createBufferSource(); src.buffer = buf; src.connect(dest); const t0 = ac.currentTime + 0.15; src.start(t0);
+        await new Promise((done, fail) => { const tick = () => {
+          if (signal && signal.aborted) { try { src.stop(); } catch (e) { /* ended */ } fail(new Error('ยกเลิกแล้ว')); return; }
+          const t = ac.currentTime - t0; if (t >= L) { done(); return; }
+          g.drawImage(rt.renderer.frame(Math.max(0, t)), 0, 0, W, H);
+          onProgress && onProgress((k + Math.max(0, t) / L) / n, `${tag}บันทึกแบบเรียลไทม์ ${Math.max(0, t).toFixed(0)}/${L.toFixed(0)} วิ (อย่าสลับแท็บหรือปิดจอ)`);
+          G.requestAnimationFrame(tick); }; tick(); });
+        total += L; if (k < n - 1 && rec.state === 'recording') rec.pause();
+      }
+    } finally { if (rec.state !== 'inactive') rec.stop(); }
+    await stopped; vs.getTracks().forEach((t) => t.stop()); ac.close && ac.close();
+    const type = mime.split(';')[0]; onProgress && onProgress(1, 'เสร็จแล้ว');
+    return { blob: new Blob(chunks, { type }), ext: type === 'video/mp4' ? 'mp4' : 'webm', sup: { recorder: mime }, seconds: total };
+  };
+
   LSE.exportVideo = (rt, onProgress, signal, opts) => LSE.exportSequence(1, async () => rt, onProgress, signal, opts);
   // n runtimes back to back in one file (a Long video = its chapters); getRt(k) builds each one only when it is encoded
   LSE.exportSequence = async function (n, getRt, onProgress, signal, opts) {
     opts = opts || {};
+    if (!opts.encodeOnly) { const plan = await LSE.exportPlan(); if (plan.mode === 'record') return LSE.recordSequence(n, getRt, onProgress, signal, plan.mime); }
     const sup = await LSE.exportSupport();
     if (!sup.video) throw new Error('เบราว์เซอร์นี้เข้ารหัสวิดีโอไม่ได้ (ไม่มี WebCodecs)');
+    if (sup.container === 'mp4' && sup.audio === 'opus' && !opts.encodeOnly) { // Opus inside MP4 plays silent on iPhones and many players: WebM (VP9 + Opus) instead
+      try { const s = await VideoEncoder.isConfigSupported({ codec: 'vp09.00.40.08', width: 1080, height: 1920, bitrate: 8e6, framerate: 30 }); if (s.supported) { sup.video = 'vp09.00.40.08'; sup.container = 'webm'; } } catch (e) { /* keep mp4 */ } }
     const W = 1080, H = 1920, FPS = 30, SR = 48000;
     const useMp4 = sup.container === 'mp4';
     const Mux = useMp4 ? G.Mp4Muxer : G.WebMMuxer; if (!Mux) throw new Error('โหลดตัวรวมไฟล์วิดีโอไม่สำเร็จ');

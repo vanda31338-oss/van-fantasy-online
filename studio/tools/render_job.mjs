@@ -15,7 +15,7 @@ window.RUN = async (bitrate) => {
   const palette = (p.palette && p.palette.length) ? p.palette : (p.castMeta && p.castMeta.palette && p.castMeta.palette.length >= 8 ? p.castMeta.palette : ch.palette);
   const rt = await LSE.buildRuntime({ cast: cards.filter((c) => c.kind !== 'scene'), scenes: cards.filter((c) => c.kind === 'scene'), beats: p.beats, palette, title: (p.pitch && p.pitch.title) || p.title, titleOn: ch.titleOn !== false, watermark: Object.assign({ text: ch.name }, ch.watermark || {}), captionColors: ch.captionColors, captionSize: ch.captionSize, voice });
   const seam = rt.renderer.seamTest();
-  const { blob, ext } = await LSE.exportVideo(rt, (f, m) => console.log('PROGRESS ' + Math.round(f * 100) + ' ' + m), null, { bitrate });
+  const { blob, ext } = await LSE.exportVideo(rt, (f, m) => console.log('PROGRESS ' + Math.round(f * 100) + ' ' + m), null, { bitrate, encodeOnly: true });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'out.' + ext; document.body.append(a); a.click();
   return { L: rt.timeline.L, seam: seam.diff, ext, size: blob.size, issues: rt.timeline.issues };
 };</script>`;
@@ -32,6 +32,9 @@ pg.on('console', (m) => { const t = m.text(); if (t.startsWith('PROGRESS') && /0
 await pg.goto('http://127.0.0.1:' + port + '/');
 const dl = pg.waitForEvent('download', { timeout: 900000 });
 const info = await pg.evaluate((b) => window.RUN(b), bitrate);
-await (await dl).saveAs(out);
+const raw = out + '.raw.' + info.ext; await (await dl).saveAs(raw);
+{ // headless Chromium on Linux writes Opus audio: re-mux with AAC so every player (iPhone included) has sound
+  const { execFileSync } = await import('child_process');
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', raw, '-c:v', info.ext === 'mp4' ? 'copy' : 'libx264', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out]); fs.unlinkSync(raw); }
 console.log(JSON.stringify(Object.assign(info, { out })));
 await browser.close(); srv.close();

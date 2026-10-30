@@ -102,8 +102,10 @@
     const prog = h('div', { class: 'progress', hidden: true }, h('i', {})); const progT = h('span', { class: 'small muted' });
     let ctl = null;
     const exportBtn = h('button', { class: 'btn pri', onclick: async () => {
-      const sup = await LSE.exportSupport();
-      if (!sup.video) { const id = await App.queueJob('render', { pid: App.st.pid, fps: 30, w: 1080, h: 1920 }, 'เรนเดอร์ MP4 ฝั่ง Claude Code (เบราว์เซอร์ headless + ffmpeg) แล้วอัปโหลด'); box.prepend(App.jobNote(App.st.jobs[id])); App.waitJob(id).then(async (j) => { const r = await fetch('/_blob/' + j.result.assetId); App.save(fileBase() + '.mp4', await r.blob()); }).catch((e) => App.toast(App.errText(e), 'err')); return; }
+      const plan = await LSE.exportPlan();
+      if (!plan.mode) { const id = await App.queueJob('render', { pid: App.st.pid, fps: 30, w: 1080, h: 1920 }, 'เรนเดอร์ MP4 ฝั่ง Claude Code (เบราว์เซอร์ headless + ffmpeg) แล้วอัปโหลด'); box.prepend(App.jobNote(App.st.jobs[id])); App.waitJob(id).then(async (j) => { const r = await fetch('/_blob/' + j.result.assetId); App.save(fileBase() + '.mp4', await r.blob()); }).catch((e) => App.toast(App.errText(e), 'err')); return; }
+      if (plan.mode === 'record') App.toast('เบราว์เซอร์นี้เข้ารหัสเสียง AAC เองไม่ได้ จึงบันทึกแบบเรียลไทม์ (ใช้เวลาเท่าความยาวคลิป) เปิดหน้าจอค้างไว้และอย่าสลับแท็บ', 'warn');
+      else if (plan.warn === 'noaudio') App.toast('เบราว์เซอร์นี้เข้ารหัสเสียงไม่ได้ ไฟล์จะไม่มีเสียง ลองใช้ Chrome หรือ Edge บนคอมพิวเตอร์', 'warn');
       exportBtn.disabled = true; prog.hidden = false; ctl = new AbortController();
       try {
         const { blob, ext } = await LSE.exportVideo(rt, (f, msg) => { prog.firstChild.style.width = Math.round(f * 100) + '%'; progT.textContent = msg + ' · ' + Math.round(f * 100) + '%'; }, ctl.signal);
@@ -121,7 +123,7 @@
       h('button', { class: 'btn pri', onclick: () => App.Long.start() }, lg ? 'ไปที่คลิป Long →' : 'ทำคลิป Long')));
     box.append(h('div', { class: 'panel col deliver' },
       h('h3', {}, 'ส่งงาน'),
-      h('div', { class: 'row' }, exportBtn, h('span', { class: 'small muted' }, '1080×1920 · 30 fps · H.264 + AAC (สำรอง VP9/Opus)')), prog, progT,
+      h('div', { class: 'row' }, exportBtn, h('span', { class: 'small muted' }, '1080×1920 · 30 fps · H.264 + AAC (สำรอง: บันทึกเรียลไทม์ หรือ WebM)')), prog, progT,
       h('div', { class: 'field' }, h('span', {}, 'ชื่อคลิปบน YouTube'), titleTa, h('div', { class: 'row' }, h('button', { class: 'btn sm', onclick: (e) => App.copy(title, e.target) }, 'คัดลอกชื่อ'))),
       h('div', { class: 'field' }, h('span', {}, 'คำอธิบายพร้อมแฮชแท็ก'), descTa, h('div', { class: 'row' }, h('button', { class: 'btn sm', onclick: (e) => App.copy(desc, e.target) }, 'คัดลอกคำอธิบาย'))),
       h('div', { class: 'field' }, h('span', {}, 'เครดิตภาพ LPC (' + cr.count + ' ไฟล์) · สัญญาอนุญาต: ' + (cr.licenses.join(', ') || '-')), crTa,

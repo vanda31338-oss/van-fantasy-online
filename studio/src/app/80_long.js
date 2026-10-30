@@ -371,8 +371,10 @@
     const prog = h('div', { class: 'progress', hidden: true }, h('i', {})); const progT = h('span', { class: 'small muted' });
     let ctl = null;
     const run = async (btn, list, name, bitrate) => { // list = chapter numbers, encoded back to back into one file
-      const sup = await LSE.exportSupport();
-      if (!sup.video) { const id = await App.queueJob('render_long', { pid: App.st.pid, chapters: list, fps: 30, w: 1080, h: 1920 }, 'เรนเดอร์คลิปยาวทีละตอนฝั่ง Claude Code แล้วอัปโหลด'); box.prepend(App.jobNote(App.st.jobs[id])); return; }
+      const plan = await LSE.exportPlan();
+      if (!plan.mode) { const id = await App.queueJob('render_long', { pid: App.st.pid, chapters: list, fps: 30, w: 1080, h: 1920 }, 'เรนเดอร์คลิปยาวทีละตอนฝั่ง Claude Code แล้วอัปโหลด'); box.prepend(App.jobNote(App.st.jobs[id])); return; }
+      if (plan.mode === 'record') App.toast('เบราว์เซอร์นี้เข้ารหัสเสียง AAC เองไม่ได้ จึงบันทึกแบบเรียลไทม์ (ใช้เวลาเท่าความยาวคลิป) เปิดหน้าจอค้างไว้และอย่าสลับแท็บ', 'warn');
+      else if (plan.warn === 'noaudio') App.toast('เบราว์เซอร์นี้เข้ารหัสเสียงไม่ได้ ไฟล์จะไม่มีเสียง ลองใช้ Chrome หรือ Edge บนคอมพิวเตอร์', 'warn');
       btn.disabled = true; prog.hidden = false; ctl = new AbortController(); App.player && App.player.stop();
       try {
         const { blob, ext } = await LSE.exportSequence(list.length, (k) => L.runtime(list[k]), (f, msg) => { prog.firstChild.style.width = Math.round(f * 100) + '%'; progT.textContent = msg + ' · ' + Math.round(f * 100) + '%'; }, ctl.signal, { bitrate });
